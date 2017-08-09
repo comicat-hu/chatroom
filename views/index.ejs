@@ -46,6 +46,7 @@
             }
             function sendMessage(){
                 let msg = $("#input").val();
+                msg = msg.replace(/[\s\t\n]$/, "");
                 socket.emit("message", msg);
                 $("#send").prop("disabled", true);
             }
@@ -82,11 +83,16 @@
                     $("#input").focus();
                 }).prop("disabled", true);
 
-                $("#input").keyup(function(){
+                $("#input").keyup(function(e){
                     if($(this).val().replace(/[\s\n\t]/g,"").length === 0){
                         return $("#send").prop("disabled", true);
+                    }else{
+                        $("#send").prop("disabled", false);
+                        if(e.which === 13 && !e.shiftKey){
+                            $("#send").trigger("click");
+                        }
                     }
-                    $("#send").prop("disabled", false);
+                    
                 }).prop("disabled", true);
             });
 

@@ -48,5 +48,8 @@ function htmlCharConvert(str){
             .replace(/>/g, "&gt;")
             .replace(/</g, "&lt;")
             .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+            .replace(/'/g, "&#039;")
+            .replace(/\s\s\s/g, "&nbsp;&nbsp;")
+            .replace(/\t\t\t/g, "\t\t")
+            .replace(/\n\n\n/g, "\n\n");
 }
