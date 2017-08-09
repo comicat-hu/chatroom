@@ -24,20 +24,21 @@ server.listen(config.port, () => {
     console.log('Run server at ' + config.host + ':' + config.port + ' - ' + new Date());
 });
 io.on('connection', function(socket) {
-    console.log('connection ' + new Date().toLocaleString());
+
+    console.log(socket.id + ' connect ' + new Date().toLocaleString());
 
     socket.on('clientTest', function(msg){
-        console.log(msg)
+        console.log(socket.id + ' ' + msg)
         socket.emit('testOK', '200 OK');
     });
 
     socket.on('message', function(msg){
-        console.log('client: ' + msg);
+        console.log(socket.id + ' send: ' + msg);
 
-        io.emit('broadcast', 'server: ' + msg);
+        io.emit('broadcast', socket.id + ': ' + msg);
     });
 
     socket.on('disconnect', function() {
-        console.log('disconnect');
+        console.log(socket.id + ' disconnect' + new Date().toLocaleString());
     });
 });
