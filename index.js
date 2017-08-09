@@ -35,10 +35,18 @@ io.on('connection', function(socket) {
     socket.on('message', function(msg){
         console.log(socket.id + ' send: ' + msg);
 
-        io.emit('broadcast', socket.id + ': ' + msg);
+        io.emit('broadcast', socket.id + ': ' + htmlCharConvert(msg));
     });
 
     socket.on('disconnect', function() {
         console.log(socket.id + ' disconnect' + new Date().toLocaleString());
     });
 });
+
+function htmlCharConvert(str){
+    return str.replace(/&/g, "&amp;")
+            .replace(/>/g, "&gt;")
+            .replace(/</g, "&lt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+}
