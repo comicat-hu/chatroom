@@ -23,33 +23,33 @@ var io = socketio(server);
 server.listen(config.port, () => {
     console.log('Run server at ' + config.host + ':' + config.port + ' - ' + new Date());
 });
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
 
     console.log(socket.id + ' connect ' + new Date().toLocaleString());
 
-    socket.on('clientTest', function(msg){
+    socket.on('clientTest', function (msg) {
         console.log(socket.id + ' ' + msg)
         socket.emit('testOK', '200 OK');
     });
 
-    socket.on('message', function(msg){
+    socket.on('message', function (msg) {
         console.log(socket.id + ' send: ' + msg);
 
         io.emit('broadcast', socket.id + ': ' + htmlCharConvert(msg));
     });
 
-    socket.on('disconnect', function() {
+    socket.on('disconnect', function () {
         console.log(socket.id + ' disconnect' + new Date().toLocaleString());
     });
 });
 
-function htmlCharConvert(str){
+function htmlCharConvert(str) {
     return str.replace(/&/g, "&amp;")
-            .replace(/>/g, "&gt;")
-            .replace(/</g, "&lt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;")
-            .replace(/\s\s\s/g, "&nbsp;&nbsp;")
-            .replace(/\t\t\t/g, "\t\t")
-            .replace(/\n\n\n/g, "\n\n");
+        .replace(/>/g, "&gt;")
+        .replace(/</g, "&lt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/\s\s\s/g, "&nbsp;&nbsp;")
+        .replace(/\t\t\t/g, "\t\t")
+        .replace(/\n\n\n/g, "\n\n");
 }
